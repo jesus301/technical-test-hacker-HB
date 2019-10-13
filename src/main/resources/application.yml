@@ -1,0 +1,4 @@
+caching:
+  specs:
+    ipAttempt:
+      ttlSeconds: 360
