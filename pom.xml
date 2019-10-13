@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.hotelbeds.supplierintegrations</groupId>
     <artifactId>technical-test-hacker</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0</version>
     <name>technical-test-hacker</name>
     <description>Technical Test Hotelbeds</description>
 
