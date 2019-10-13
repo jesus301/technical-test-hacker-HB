@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.constraints.NotNull;
 
 @RestController
-@RequestMapping("/hacker/detector")
+@RequestMapping("/api/hacker/detector")
 public class HackerDetectorController {
 
     private final HackerDetectorService hackerDetectorService;
