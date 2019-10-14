@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.regex.Pattern;
 
+import static com.hotelbeds.supplierintegrations.constant.Constant.PATTERN_PARSE_LINE;
 import static com.hotelbeds.supplierintegrations.util.DateUtil.parseEpochFormatToLocalDateTimeDefaultUTC;
 
 @Service
@@ -21,10 +23,11 @@ public class HackerDetectorService implements HackerDetector {
 
     @Override
     public String parseLine(final String line) {
-        final String[] processLine = line.split(",");
-        if (processLine.length < 4) {
+        final Pattern pattern = Pattern.compile(PATTERN_PARSE_LINE);
+        if (!pattern.matcher(line).matches()) {
             throw new RuntimeException("Incorrect format process line");
         }
+        final String[] processLine = line.split(",");
         return LoginResultOption.SIGNIN_FAILURE.toString().equals(processLine[2])
                 ? processIpMaxLimitAttempts(processLine)
                 : null;
