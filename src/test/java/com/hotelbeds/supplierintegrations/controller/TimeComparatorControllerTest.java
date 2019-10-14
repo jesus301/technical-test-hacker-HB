@@ -1,67 +1,42 @@
 package com.hotelbeds.supplierintegrations.controller;
 
-import com.hotelbeds.supplierintegrations.model.TimeComparatorDTO;
 import com.hotelbeds.supplierintegrations.service.TimeComparatorService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 
-import java.sql.Timestamp;
+import static org.junit.Assert.assertEquals;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Matchers.any;
-
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(SpringRunner.class)
+@WebMvcTest(TimeComparatorController.class)
+@ContextConfiguration(classes = {
+        TimeComparatorController.class
+})
 public class TimeComparatorControllerTest {
 
-    @InjectMocks
-    private TimeComparatorController timeComparator;
+    @Autowired
+    private MockMvc mockMvc;
 
-    @Mock
+    @MockBean
     private TimeComparatorService timeComparatorService;
 
     @Test
-    public void testSameResultCompareTwoDate() {
-        Timestamp time1 = new Timestamp(987654321);
-        given(timeComparatorService.compareTwoTimeStamp(any(Timestamp.class), any(Timestamp.class)))
-                .willReturn(0);
+    public void testTimeComparatorDeserializer() throws Exception {
+        final MvcResult mvcResult = this.mockMvc.perform(post("/api/comparator/time-comparator")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"time1\":\"Thu, 21 Dec 2000 16:00:00 +0200\",\"time2\":\"Thu, 21 Dec 2020 16:41:59 +0900\"}"))
+                .andExpect(status().is2xxSuccessful())
+                .andReturn();
 
-        Integer result = timeComparator.timeComparator(TimeComparatorDTO.builder()
-                            .time1(time1)
-                            .time2(time1)
-                            .build());
-        assertThat(0, is(result));
-    }
-
-    @Test
-    public void testNegativeResultCompareTwoDate() {
-        Timestamp time1 = new Timestamp(987654321);
-        Timestamp time2 = new Timestamp(987654559);
-        given(timeComparatorService.compareTwoTimeStamp(any(Timestamp.class), any(Timestamp.class)))
-                .willReturn(-123);
-
-        Integer result = timeComparator.timeComparator(TimeComparatorDTO.builder()
-                .time1(time1)
-                .time2(time2)
-                .build());
-        assertThat(-123, is(result));
-    }
-
-    @Test
-    public void testPositiveResultCompareTwoDate() {
-        Timestamp time1 = new Timestamp(987654559);
-        Timestamp time2 = new Timestamp(987654321);
-        given(timeComparatorService.compareTwoTimeStamp(any(Timestamp.class), any(Timestamp.class)))
-                .willReturn(123);
-
-        Integer result = timeComparator.timeComparator(TimeComparatorDTO.builder()
-                .time1(time1)
-                .time2(time2)
-                .build());
-        assertThat(123, is(result));
+        assertEquals("0", mvcResult.getResponse().getContentAsString());
     }
 }
