@@ -30,7 +30,7 @@ public class HackerDetectorControllerTest {
     private HackerDetectorService hackerDetectorService;
 
     @Test
-    public void testProcessLineErrorDeserialization() throws Exception {
+    public void testProcessLineDeserialization() throws Exception {
         final MvcResult mvcResult = this.mockMvc.perform(post("/api/hacker/detector/process-line")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content("80.238.9.125,133612947,SIGNIN_FAILURE,Will.Smith")
@@ -39,5 +39,13 @@ public class HackerDetectorControllerTest {
                 .andReturn();
 
         assertNull(mvcResult.getResponse().getContentType());
+    }
+
+    @Test
+    public void testProcessLineBadRequest() throws Exception {
+        this.mockMvc.perform(post("/api/hacker/detector/process-line")
+                .accept(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(status().is4xxClientError())
+                .andReturn();
     }
 }

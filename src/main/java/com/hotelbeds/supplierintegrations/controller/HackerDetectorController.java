@@ -8,8 +8,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.constraints.NotNull;
 
+import static com.hotelbeds.supplierintegrations.constant.Constant.BASE_API;
+
 @RestController
-@RequestMapping("/api/hacker/detector")
+@RequestMapping(BASE_API + "/hacker/detector")
 public class HackerDetectorController {
 
     private final HackerDetectorService hackerDetectorService;

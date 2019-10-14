@@ -1,24 +1,17 @@
 package com.hotelbeds.supplierintegrations.service;
 
-import com.hotelbeds.supplierintegrations.util.DateUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.time.ZoneOffset;
-import java.util.TimeZone;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyObject;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TimeComparatorServiceTest {

@@ -57,7 +57,7 @@ public class HackerDetectorServiceTest {
     }
 
     @Test
-    public void testFailedLoginFiveOrMoreTimesInFiveMinute() {
+    public void testFailedLoginFiveOrMoreTimesInLastFiveMinute() {
         LocalDateTime localDateTime = LocalDateTime.now();
         given(validationIpErrorService.processNumberAttempt(anyString(), any(LocalDateTime.class)))
                 .willReturn(IpNumberOfAttempt.builder()

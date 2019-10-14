@@ -39,4 +39,12 @@ public class TimeComparatorControllerTest {
 
         assertEquals("0", mvcResult.getResponse().getContentAsString());
     }
+
+    @Test
+    public void testTimeComparatorBadRequest() throws Exception {
+
+        this.mockMvc.perform(post("/api/comparator/time-comparator"))
+                .andExpect(status().is4xxClientError())
+                .andReturn();
+    }
 }

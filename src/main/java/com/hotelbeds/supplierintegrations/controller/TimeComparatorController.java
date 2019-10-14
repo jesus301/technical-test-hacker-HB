@@ -9,8 +9,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
+import static com.hotelbeds.supplierintegrations.constant.Constant.BASE_API;
+
 @RestController
-@RequestMapping("/api/comparator")
+@RequestMapping(BASE_API + "/comparator")
 public class TimeComparatorController {
 
     private final TimeComparatorService timeComparatorService;

@@ -32,7 +32,7 @@ public class CacheConfig {
     private Map<String, CacheSpec> specs;
 
     @Bean
-    public CacheManager cacheManager(Ticker ticker) {
+    public CacheManager cacheManager(final Ticker ticker) {
         SimpleCacheManager manager = new SimpleCacheManager();
         if (specs != null) {
             List<CaffeineCache> caches =
@@ -46,7 +46,7 @@ public class CacheConfig {
         return manager;
     }
 
-    private CaffeineCache buildCache(String name, CacheSpec cacheSpec, Ticker ticker) {
+    private CaffeineCache buildCache(final String name, final CacheSpec cacheSpec, final Ticker ticker) {
         log.info("Cache {} specified time to live of {} seconds", name, cacheSpec.getTtlSeconds());
         final Caffeine<Object, Object> caffeineBuilder = Caffeine.newBuilder()
                 .expireAfterWrite(cacheSpec.getTtlSeconds(), TimeUnit.SECONDS)
